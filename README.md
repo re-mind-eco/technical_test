@@ -15,10 +15,10 @@ Paramètres de requête :
 - `publication_date` : La date de publication du livre (optionnelle).
 
 Exemple de requête : 
+`POST /test/books/`
+`Content-Type: application/json`
 
 ```json
-POST /test/books/
-Content-Type: application/json
 
 {
     "title": "Nom du livre",
