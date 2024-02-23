@@ -1,84 +1,51 @@
+# Test Technique
 
-## Objective: 
-Create an app in django with posgreSQL to save and search book. Use Docker to local postgress.
-Design and implement APIs using Django REST Framework, create a documentation for launch the project.
+## API
 
+### Ajout de livres
 
-### Task: 
-  1. Endpoint for saving books:
+`POST /test/books/`
 
-            Method: POST
-            Route: /test/books/
-            Payload:
-            Title: String
-            Author: String
-            Description: String (optional)
-            ISBN: String (unique)
-            Publication date: Date (optional)
-     
-  3. Endpoint for searching books:
+Paramètres de requête :
 
-          Method: GET
-          Route: /test/books/search/
-          Parameters:
-          q: String (search parameter by title or author)
+- `title` : Le titre du livre (obligatoire).
+- `author` : L'auteur du livre (obligatoire).
+- `description` : Une description du livre (optionnelle).
+- `isbn` : Le numéro ISBN du livre (obligatoire et unique).
+- `publication_date` : La date de publication du livre (optionnelle).
 
-     
-3. Data model:
-
-        Entity: Book
-        Attributes:
-        ID: Integer (auto-generated primary key)
-        Title: String
-        Author: String
-        Description: String (optional)
-        ISBN: String (unique)
-        Publication date: Date (optional)
-        Creation date: Date (auto-generated)
-        Update date: Date (auto-generated)
-   
-5. Implementation:
-
-        Framework: Django
-        Database: PostgreSQL
-        API: Django REST Framework
-
-6. Create a initial migration
-
-
-      JSON of data for initial migration:
+Exemple de requête : 
+`POST /test/books/`
+`Content-Type: application/json`
 
 ```json
-[
-  {
-    "title": "The Little Prince",
-    "author": "Antoine de Saint-Exupéry",
-    "description": "An aviator crashes in the desert and meets a little prince who has traveled from a distant asteroid.",
-    "isbn": "978-2-07-057428-9",
-    "publication_date": "1943-04-01"
-  },
-  {
-    "title": "One Hundred Years of Solitude",
-    "author": "Gabriel García Márquez",
-    "description": "The story of the Buendía family over seven generations in Macondo, a fictional village in Colombia.",
-    "isbn": "978-84-264-1828-6",
-    "publication_date": "1967-05-30"
-  },
-  {
-    "title": "1984",
-    "author": "George Orwell",
-    "description": "A man lives in a dystopian society where the government constantly monitors him.",
-    "isbn": "978-84-663-1632-9",
-    "publication_date": "1949-06-08"
-  }
-]
+
+{
+    "title": "Nom du livre",
+    "author": "Nom de l'auteur",
+    "description": "Description du livre",
+    "isbn": "1234567890",
+    "publication_date": "2022-01-01"
+}
 ```
 
-5. Deliverables:
+### Recherche de livres
 
-        Application source code (this repository)
-        API documentation (new readme to how to run the project)
-   
+`GET /test/books/search/`
+
+Paramètres de requête :
+
+- `q` : Chaîne de caractères à rechercher dans le titre et l'auteur des livres.
+
+Exemple de requête : `GET /test/books/search/?q=python`
+
+## Comment lancer le projet
+
+1. Clonez le dépôt Git
+2. Dupliquez le fichier `template.env` en `.env`, puis remplissez les variables d'environnements
+3. Construisez et lancez les conteneurs avec `docker-compose up --env-file .env up`.
+
+Le serveur Django devrait maintenant être en cours d'exécution sur `localhost:8000`.
 
 
-
+### Test réalisé par Wilquin Logan
