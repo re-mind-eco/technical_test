@@ -1,84 +1,102 @@
+# Book Management API
 
-## Objective: 
-Create an app in django with posgreSQL to save and search book. Use Docker to local postgress.
-Design and implement APIs using Django REST Framework, create a documentation for launch the project.
+## Getting Started
 
+Follow these steps to set up and run the project locally.
 
-### Task: 
-  1. Endpoint for saving books:
+### Prerequisites
 
-            Method: POST
-            Route: /test/books/
-            Payload:
-            Title: String
-            Author: String
-            Description: String (optional)
-            ISBN: String (unique)
-            Publication date: Date (optional)
-     
-  3. Endpoint for searching books:
+- Python 3.x
+- Docker 
 
-          Method: GET
-          Route: /test/books/search/
-          Parameters:
-          q: String (search parameter by title or author)
+### Installation
 
-     
-3. Data model:
+1. Clone this repository to your local machine:
 
-        Entity: Book
-        Attributes:
-        ID: Integer (auto-generated primary key)
-        Title: String
-        Author: String
-        Description: String (optional)
-        ISBN: String (unique)
-        Publication date: Date (optional)
-        Creation date: Date (auto-generated)
-        Update date: Date (auto-generated)
-   
-5. Implementation:
+    ```bash
+    git clone https://github.com/"yourcompany"/book-management-api.git
+    ```
 
-        Framework: Django
-        Database: PostgreSQL
-        API: Django REST Framework
+2. Navigate to the project directory:
 
-6. Create a initial migration
+    ```bash
+    cd book-management-api
+    ```
 
+3. Install the dependencies:
 
-      JSON of data for initial migration:
+    ```bash
+    pip install -r requirements.txt
+    ```
 
-```json
-[
-  {
-    "title": "The Little Prince",
-    "author": "Antoine de Saint-Exupéry",
-    "description": "An aviator crashes in the desert and meets a little prince who has traveled from a distant asteroid.",
-    "isbn": "978-2-07-057428-9",
-    "publication_date": "1943-04-01"
-  },
-  {
-    "title": "One Hundred Years of Solitude",
-    "author": "Gabriel García Márquez",
-    "description": "The story of the Buendía family over seven generations in Macondo, a fictional village in Colombia.",
-    "isbn": "978-84-264-1828-6",
-    "publication_date": "1967-05-30"
-  },
-  {
-    "title": "1984",
-    "author": "George Orwell",
-    "description": "A man lives in a dystopian society where the government constantly monitors him.",
-    "isbn": "978-84-663-1632-9",
-    "publication_date": "1949-06-08"
-  }
-]
+### Database Setup
+
+If you're not using Docker, make sure you have PostgreSQL installed and create a database for the project. Then, update the database settings in `myproject/settings.py` accordingly.
+
+If you're using Docker, you can run the PostgreSQL database in a container. Make sure Docker is installed on your machine, then run the following command:
+
+```bash
+docker-compose up -d
 ```
 
-5. Deliverables:
-
-        Application source code (this repository)
-        API documentation (new readme to how to run the project)
+4. Create PostgreSQL database (If not using Docker):
    
+   - Open PostgreSQL shell:
 
+     ```bash
+     psql -U <username>
+     ```
 
+   - Create a new database:
 
+     ```sql
+     CREATE DATABASE <database_name>;
+     ```
+
+5. Update database settings:
+
+    - Open `settings.py` file located in `myproject` directory.
+    
+    - Update the database configuration with your PostgreSQL credentials:
+
+      ```python
+      DATABASES = {
+          'default': {
+              'ENGINE': 'django.db.backends.postgresql',
+              'NAME': '<database_name>',
+              'USER': '<username>',
+              'PASSWORD': '<password>',
+              'HOST': 'localhost',
+              'PORT': '5432',
+          }
+      }
+      ```
+
+6. Apply migrations:
+
+    ```bash
+    python manage.py makemigrations books 
+    ```
+
+7. Apply migrate:
+
+    ```bash
+    python manage.py migrate
+    ```
+
+8. Populate initial data:
+
+    Run the following command to populate the database with initial data provided in the `populate_books.py` file:
+
+    ```bash
+    python manage.py populate_books
+    ```
+
+9. Running the server: 
+
+    Start the Django development server:
+
+    ```bash
+    python manage.py runserver
+    ```
+    The server should now be running locally at http://127.0.0.1:8000/
